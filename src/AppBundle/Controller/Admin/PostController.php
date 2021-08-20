@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Admin;
 
-//use AppBundle\Entity\Parameter;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\OptionName;
 use AppBundle\Entity\Parameter;
@@ -34,13 +33,6 @@ class PostController extends Controller
      */
     public function indexAction(Request $request, PaginatorInterface $paginator)
     {
-//        $option = $this->getDoctrine()->getRepository(OptionName::class)->findByName('0');
-//
-//        dump($this->haveMainImage(112));
-//        die;
-
-
-
         $queryPosts = $this->getDoctrine()->getRepository(Post::class)->getQueryPosts();
 
         $pagination = $paginator->paginate(
@@ -66,12 +58,8 @@ class PostController extends Controller
         $form->handleRequest($request);
         $entityManager = $this->getDoctrine()->getManager();
 
-//        if ($form->isSubmitted() && $form->isValid()) {
         if ($form->isSubmitted()) {
             $data = $request->request->all();
-
-//            dump($data);
-//            die;
 
             if (isset($data['post']['parameters']) && count($data['post']['parameters']) > 0) {
                 foreach ($data['post']['parameters'] as $key => $options) {
@@ -172,7 +160,6 @@ class PostController extends Controller
         $count_uploaded_photos = count($post->getImages());
         $max_count_expected_photos = $max_count_photos - $count_uploaded_photos;
 
-//        if ($form->isSubmitted() && $form->isValid()) {
         if ($form->isSubmitted()) {
             $postOptions = $entityManager->getRepository(OptionName::class)->getByPost($post->getId());
             foreach ($postOptions as $option) {
